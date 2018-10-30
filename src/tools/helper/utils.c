@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdlib.h> // strtol
 #include <string.h> // strlen
 #include <rawrtc.h>
