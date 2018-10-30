@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdio.h> // sprintf
 #include <string.h> // strlen
 #include <netinet/in.h> // IPPROTO_UDP, IPPROTO_TCP

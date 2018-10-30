@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <openssl/bio.h> // BIO_new_mem_buf
 #include <openssl/dh.h> // DH, DH_check_params
 #include <openssl/err.h> // ERR_clear_error
@@ -21,7 +22,7 @@ static enum rawrtc_code set_dh_parameters(
     int codes;
 
     // Check that the parameters are "likely enough to be valid"
-#if OPENSSL_VERSION_NUMBER < 0x1010000fL
+#if OPENSSL_VERSION_NUMBER < 0x1010000fL || OPENSSL_IS_BORINGSSL
     if (!DH_check(dh, &codes)) {
         return RAWRTC_CODE_INVALID_ARGUMENT;
     }
