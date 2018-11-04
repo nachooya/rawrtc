@@ -1,4 +1,5 @@
 #include <pthread.h> // pthread_*
+#include <strings.h>
 #include <rawrtc.h>
 #include "main.h"
 
@@ -47,6 +48,8 @@ enum rawrtc_code rawrtc_init() {
 
     // Set usrsctp initialised counter
     rawrtc_global.usrsctp_initialized = 0;
+
+    bzero(&rawrtc_global.usrsctp_tick_timer, sizeof(struct tmr));
 
     // Done
     return RAWRTC_CODE_SUCCESS;
