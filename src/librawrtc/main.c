@@ -49,7 +49,7 @@ enum rawrtc_code rawrtc_init() {
     // Set usrsctp initialised counter
     rawrtc_global.usrsctp_initialized = 0;
 
-    bzero(&rawrtc_global.usrsctp_tick_timer, sizeof(struct tmr));
+    tmr_init (&rawrtc_global.usrsctp_tick_timer);
 
     // Done
     return RAWRTC_CODE_SUCCESS;
