@@ -40,7 +40,7 @@ static void rawrtc_ice_transport_destroy(
         void* arg
 ) {
   
-    DEBUG_PRINTF("[ice_transport.c]: rawrtc_ice_transport_destroy\n");
+    DEBUG_INFO("--->[ice_transport.c]: rawrtc_ice_transport_destroy\n");
   
     struct rawrtc_ice_transport* const transport = arg;
 
@@ -64,7 +64,7 @@ enum rawrtc_code rawrtc_ice_transport_create(
         void* const arg // nullable
 ) {
   
-    DEBUG_PRINTF("[ice_transport.c]: rawrtc_ice_transport_create\n");
+    DEBUG_INFO("--->[ice_transport.c]: rawrtc_ice_transport_create\n");
       
     struct rawrtc_ice_transport* transport;
 

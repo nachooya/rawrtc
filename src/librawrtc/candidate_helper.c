@@ -12,7 +12,7 @@ static void rawrtc_candidate_helper_destroy(
         void* arg
 ) {
   
-    DEBUG_PRINTF("[candidate_helper.c]: rawrtc_candidate_helper_destroy\n");
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_destroy\n");
   
     struct rawrtc_candidate_helper* const local_candidate = arg;
 
@@ -34,7 +34,7 @@ enum rawrtc_code rawrtc_candidate_helper_create(
         void* const arg
 ) {
   
-    DEBUG_PRINTF("[candidate_helper.c]: rawrtc_candidate_helper_create\n");
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_create\n");
 
     struct rawrtc_candidate_helper* candidate_helper;
     enum rawrtc_code error;

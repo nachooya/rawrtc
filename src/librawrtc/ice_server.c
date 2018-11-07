@@ -560,7 +560,7 @@ static void rawrtc_ice_server_url_dns_context_destroy(
         void* arg
 ) {
   
-    DEBUG_PRINTF("[ice_server.c]: rawrtc_ice_server_url_dns_context_destroy\n");
+    DEBUG_INFO("--->[ice_server.c]: rawrtc_ice_server_url_dns_context_destroy\n");
   
     struct rawrtc_ice_server_url_dns_context* const context = arg;
 
@@ -580,7 +580,7 @@ enum rawrtc_code rawrtc_ice_server_url_dns_context_create(
         struct rawrtc_ice_gatherer* const gatherer // referenced
 ) {
   
-    DEBUG_PRINTF("[ice_server.c]: rawrtc_code rawrtc_ice_server_url_dns_context_create\n");
+    DEBUG_INFO("--->[ice_server.c]: rawrtc_code rawrtc_ice_server_url_dns_context_create\n");
   
     struct rawrtc_ice_server_url_dns_context* context;
 
