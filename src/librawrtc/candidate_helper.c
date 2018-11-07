@@ -1,12 +1,19 @@
 #include <rawrtc.h>
 #include "candidate_helper.h"
 
+#define DEBUG_MODULE "candidate-helper"
+//#define RAWRTC_DEBUG_MODULE_LEVEL 7 // Note: Uncomment this to debug this module only
+#include "debug.h"
+
 /*
  * Destructor for an existing candidate helper.
  */
 static void rawrtc_candidate_helper_destroy(
         void* arg
 ) {
+  
+    DEBUG_PRINTF("[candidate_helper.c]: rawrtc_candidate_helper_destroy\n");
+  
     struct rawrtc_candidate_helper* const local_candidate = arg;
 
     // Un-reference
@@ -26,6 +33,9 @@ enum rawrtc_code rawrtc_candidate_helper_create(
         udp_helper_recv_h* const receive_handler,
         void* const arg
 ) {
+  
+    DEBUG_PRINTF("[candidate_helper.c]: rawrtc_candidate_helper_create\n");
+
     struct rawrtc_candidate_helper* candidate_helper;
     enum rawrtc_code error;
 

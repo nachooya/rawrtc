@@ -307,6 +307,7 @@ out:
 static void rawrtc_ice_server_url_destroy(
         void* arg
 ) {
+
     struct rawrtc_ice_server_url* const url = arg;
 
     // Remove from list
@@ -558,6 +559,9 @@ enum rawrtc_code rawrtc_ice_server_destroy_dns_contexts(
 static void rawrtc_ice_server_url_dns_context_destroy(
         void* arg
 ) {
+  
+    DEBUG_PRINTF("[ice_server.c]: rawrtc_ice_server_url_dns_context_destroy\n");
+  
     struct rawrtc_ice_server_url_dns_context* const context = arg;
 
     // Un-reference
@@ -575,6 +579,9 @@ enum rawrtc_code rawrtc_ice_server_url_dns_context_create(
         struct rawrtc_ice_server_url* const url,
         struct rawrtc_ice_gatherer* const gatherer // referenced
 ) {
+  
+    DEBUG_PRINTF("[ice_server.c]: rawrtc_code rawrtc_ice_server_url_dns_context_create\n");
+  
     struct rawrtc_ice_server_url_dns_context* context;
 
     // Check arguments

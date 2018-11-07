@@ -39,6 +39,9 @@ char const * const rawrtc_ice_transport_state_to_name(
 static void rawrtc_ice_transport_destroy(
         void* arg
 ) {
+  
+    DEBUG_PRINTF("[ice_transport.c]: rawrtc_ice_transport_destroy\n");
+  
     struct rawrtc_ice_transport* const transport = arg;
 
     // Stop transport
@@ -60,6 +63,9 @@ enum rawrtc_code rawrtc_ice_transport_create(
         rawrtc_ice_transport_candidate_pair_change_handler* const candidate_pair_change_handler, // nullable
         void* const arg // nullable
 ) {
+  
+    DEBUG_PRINTF("[ice_transport.c]: rawrtc_ice_transport_create\n");
+      
     struct rawrtc_ice_transport* transport;
 
     // Check arguments
