@@ -15,7 +15,9 @@
 //#endif
 //#include <zf_log.h>
 
-#define RAWRTC_DEBUG_LEVEL 5
+#ifndef RAWRTC_DEBUG_LEVEL
+  #define RAWRTC_DEBUG_LEVEL 5
+#endif
 
 // TODO: Can we get rid of these hacky defines?
 #define USE_OPENSSL
