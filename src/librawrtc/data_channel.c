@@ -74,6 +74,9 @@ void rawrtc_data_channel_set_state(
 static void rawrtc_data_channel_destroy(
         void* arg
 ) {
+  
+    DEBUG_INFO("--->[data_channel.c]: rawrtc_data_channel_destroy\n");
+  
     struct rawrtc_data_channel* const channel = arg;
 
     // Unset all handlers
@@ -110,6 +113,9 @@ enum rawrtc_code rawrtc_data_channel_create_internal(
         void* const arg, // nullable
         bool const call_handler
 ) {
+  
+    DEBUG_INFO("--->[data_channel.c]: rawrtc_data_channel_create_internal\n");
+  
     enum rawrtc_code error;
     struct rawrtc_data_channel *channel;
 
