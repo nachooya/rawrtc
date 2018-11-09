@@ -564,6 +564,9 @@ static void rawrtc_dtls_transport_destroy(
     for (le = list_head(&transport->ice_transport->gatherer->local_candidates);
          le != NULL; le = le->next) {
         struct rawrtc_candidate_helper* const candidate_helper = le->data;
+
+        enum rawrtc_code error = rawrtc_candidate_helper_unset_receive_handler(candidate_helper);
+
         mem_deref(candidate_helper->udp_helper);
         // TODO: Be aware that UDP packets go to nowhere now...
     }

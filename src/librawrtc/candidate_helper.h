@@ -37,6 +37,10 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
     void* const arg
 );
 
+enum rawrtc_code rawrtc_candidate_helper_unset_receive_handler(
+    struct rawrtc_candidate_helper* const candidate_helper
+);
+
 enum rawrtc_code rawrtc_candidate_helper_find(
     struct rawrtc_candidate_helper** const candidate_helperp,
     struct list* const candidate_helpers,

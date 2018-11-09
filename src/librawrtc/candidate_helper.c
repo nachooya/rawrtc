@@ -114,6 +114,32 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
 }
 
 /*
+ * Set a candidate helper's receive handler.
+ */
+enum rawrtc_code rawrtc_candidate_helper_unset_receive_handler(
+        struct rawrtc_candidate_helper* const candidate_helper
+) {
+    enum rawrtc_code error;
+
+    // Check arguments
+    if (!candidate_helper) {
+        return RAWRTC_CODE_INVALID_ARGUMENT;
+    }
+    
+    // Get local candidate's UDP socket
+    struct udp_sock* const udp_socket = trice_lcand_sock(
+            candidate_helper->gatherer->ice, candidate_helper->candidate);
+    if (!udp_socket) {
+        return RAWRTC_CODE_NO_SOCKET;
+    }
+
+    udp_handler_set(udp_socket, NULL, NULL);
+
+    // Done
+    return RAWRTC_CODE_SUCCESS;
+}
+
+/*
  * Find a specific candidate helper by re candidate.
  */
 enum rawrtc_code rawrtc_candidate_helper_find(
