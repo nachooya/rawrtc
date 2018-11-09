@@ -1421,7 +1421,7 @@ static void handle_application_message(
         error = RAWRTC_CODE_INVALID_MESSAGE;
         goto out;
     }
-    context = channel->transport_arg;
+    context = mem_ref(channel->transport_arg);
 
     // Messages may now be sent unordered
     // TODO: Should we update this flag before or after the message has been received completely
@@ -1521,6 +1521,7 @@ out:
     // Un-reference
     if (context) {
         context->buffer_inbound = mem_deref(context->buffer_inbound);
+        context = mem_deref(context);
     }
 }
 
