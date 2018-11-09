@@ -1914,6 +1914,9 @@ enum rawrtc_code data_channels_alloc(
 static void rawrtc_sctp_transport_destroy(
         void* arg
 ) {
+  
+    DEBUG_INFO("--->[sctp_transport.c]: rawrtc_sctp_transport_destroy\n");
+  
     struct rawrtc_sctp_transport* const transport = arg;
 
     // Stop transport
