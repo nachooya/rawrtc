@@ -515,6 +515,7 @@ static void set_state(
             if (fclose(transport->trace_handle)) {
                 DEBUG_WARNING("Could not close trace file, reason: %m\n", errno);
             }
+            transport->trace_handle = NULL;
         }
     }
 
@@ -2067,6 +2068,7 @@ enum rawrtc_code rawrtc_sctp_transport_create(
 
     // Create packet tracer
     // TODO: Debug mode only, filename set by debug options
+    transport->trace_handle = NULL
 #ifdef SCTP_DEBUG
     {
         char trace_handle_id[8];
