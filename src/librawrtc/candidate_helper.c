@@ -119,21 +119,13 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
 enum rawrtc_code rawrtc_candidate_helper_unset_receive_handler(
         struct rawrtc_candidate_helper* const candidate_helper
 ) {
-    enum rawrtc_code error;
 
     // Check arguments
-    if (!candidate_helper) {
+    if (!candidate_helper || !candidate_helper->udp_helper) {
         return RAWRTC_CODE_INVALID_ARGUMENT;
     }
-    
-    // Get local candidate's UDP socket
-    struct udp_sock* const udp_socket = trice_lcand_sock(
-            candidate_helper->gatherer->ice, candidate_helper->candidate);
-    if (!udp_socket) {
-        return RAWRTC_CODE_NO_SOCKET;
-    }
 
-    udp_handler_set(udp_socket, NULL, NULL);
+    udp_helper_handler_set (candidate_helper->udp_helper, NULL, NULL);
 
     // Done
     return RAWRTC_CODE_SUCCESS;
