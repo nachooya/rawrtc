@@ -117,6 +117,7 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
 
     // Unset current helper (if any) and set new helper
     if (candidate_helper->udp_helper) {
+        DEBUG_INFO("--->[candidate_helper.c]: Unsetting prev udp_helper: %p\n", candidate_helper->udp_helper);
         udp_helper_handler_set (candidate_helper->udp_helper, NULL, NULL);
     }
     mem_deref(candidate_helper->udp_helper);
@@ -135,7 +136,7 @@ enum rawrtc_code rawrtc_candidate_helper_unset_receive_handler(
         struct rawrtc_candidate_helper* const candidate_helper
 ) {
 
-    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_unset_receive_handler\n");
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_unset_receive_handler: candidate_helper: %p, udp_helper: %p\n", candidate_helper, candidate_helper->udp_helper);
 
     // Check arguments
     if (!candidate_helper || !candidate_helper->udp_helper) {
