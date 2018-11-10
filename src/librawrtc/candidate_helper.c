@@ -116,8 +116,10 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
     }
 
     // Unset current helper (if any) and set new helper
+    if (candidate_helper->udp_helper) {
+        udp_helper_handler_set (candidate_helper->udp_helper, NULL, NULL);
+    }
     mem_deref(candidate_helper->udp_helper);
-    // TODO: unset receive_handler
     candidate_helper->udp_helper = udp_helper;
 
     // TODO: What about TCP helpers?
