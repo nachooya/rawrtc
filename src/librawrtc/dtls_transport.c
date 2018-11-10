@@ -565,12 +565,6 @@ static void rawrtc_dtls_transport_destroy(
          le != NULL; le = le->next) {
         struct rawrtc_candidate_helper* const candidate_helper = le->data;
 
-        enum rawrtc_code error = rawrtc_candidate_helper_unset_receive_handler(candidate_helper);
-    
-        if (error != RAWRTC_CODE_SUCCESS) {
-            DEBUG_WARNING("rawrtc_dtls_transport_destroy: could not unset candidate_helper\n");
-        }
-
         mem_deref(candidate_helper->udp_helper);
         // TODO: Be aware that UDP packets go to nowhere now...
     }

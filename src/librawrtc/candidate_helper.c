@@ -16,6 +16,12 @@ static void rawrtc_candidate_helper_destroy(
   
     struct rawrtc_candidate_helper* const local_candidate = arg;
 
+    enum rawrtc_code error = rawrtc_candidate_helper_unset_receive_handler(local_candidate);
+
+    if (error != RAWRTC_CODE_SUCCESS) {
+        DEBUG_WARNING("rawrtc_candidate_helper_destroy: could not unset candidate_helper\n");
+    }
+    
     // Un-reference
     list_flush(&local_candidate->stun_sessions);
     mem_deref(local_candidate->udp_helper);
