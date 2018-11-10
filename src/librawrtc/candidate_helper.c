@@ -95,7 +95,7 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
     }
 
     DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_set_receive_handler candidate_helper: %p receive_handler: %p arg: %p prev udp_helper: %p\n",
-            candidate_helper
+            candidate_helper,
             receive_handler,
             arg,
             candidate_helper->udp_helper);
