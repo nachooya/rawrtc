@@ -86,9 +86,6 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
         udp_helper_recv_h* const receive_handler,
         void* const arg
 ) {
-  
-    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_set_receive_handler with arg: %p\n", arg);
-  
     enum rawrtc_code error;
     struct udp_helper* udp_helper;
 
@@ -96,6 +93,12 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
     if (!candidate_helper || !receive_handler) {
         return RAWRTC_CODE_INVALID_ARGUMENT;
     }
+
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_set_receive_handler candidate_helper: %p receive_handler: %p arg: %p prev udp_helper: %p\n",
+            candidate_helper
+            receive_handler,
+            arg,
+            candidate_helper->udp_helper);
 
     // Get local candidate's UDP socket
     struct udp_sock* const udp_socket = trice_lcand_sock(
@@ -114,6 +117,7 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
 
     // Unset current helper (if any) and set new helper
     mem_deref(candidate_helper->udp_helper);
+    // TODO: unset receive_handler
     candidate_helper->udp_helper = udp_helper;
 
     // TODO: What about TCP helpers?
