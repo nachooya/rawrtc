@@ -80,6 +80,9 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
         udp_helper_recv_h* const receive_handler,
         void* const arg
 ) {
+  
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_set_receive_handler with arg: %p\n", arg);
+  
     enum rawrtc_code error;
     struct udp_helper* udp_helper;
 
@@ -119,6 +122,8 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
 enum rawrtc_code rawrtc_candidate_helper_unset_receive_handler(
         struct rawrtc_candidate_helper* const candidate_helper
 ) {
+
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_unset_receive_handler\n");
 
     // Check arguments
     if (!candidate_helper || !candidate_helper->udp_helper) {
