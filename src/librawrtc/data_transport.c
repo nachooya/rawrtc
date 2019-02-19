@@ -12,6 +12,9 @@
 static void rawrtc_data_transport_destroy(
         void* arg
 ) {
+  
+    DEBUG_INFO("--->[data_transport.c]: rawrtc_data_transport_destroy\n");
+      
     struct rawrtc_data_transport* const transport = arg;
 
     // Un-reference
@@ -29,6 +32,9 @@ enum rawrtc_code rawrtc_data_transport_create(
         rawrtc_data_transport_channel_close_handler* const channel_close_handler,
         rawrtc_data_transport_channel_send_handler* const channel_send_handler
 ) {
+  
+    DEBUG_INFO("--->[data_transport.c]: rawrtc_data_transport_create\n");
+  
     struct rawrtc_data_transport* transport;
 
     // Check arguments

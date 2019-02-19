@@ -1,14 +1,27 @@
 #include <rawrtc.h>
 #include "candidate_helper.h"
 
+#define DEBUG_MODULE "candidate-helper"
+//#define RAWRTC_DEBUG_MODULE_LEVEL 7 // Note: Uncomment this to debug this module only
+#include "debug.h"
+
 /*
  * Destructor for an existing candidate helper.
  */
 static void rawrtc_candidate_helper_destroy(
         void* arg
 ) {
+  
     struct rawrtc_candidate_helper* const local_candidate = arg;
+    
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_destroy, local_candidate: %p udp_helper:%p\n", local_candidate, local_candidate->udp_helper);
 
+    enum rawrtc_code error = rawrtc_candidate_helper_unset_receive_handler(local_candidate);
+
+    if (error != RAWRTC_CODE_SUCCESS) {
+        DEBUG_WARNING("rawrtc_candidate_helper_destroy: could not unset candidate_helper\n");
+    }
+    
     // Un-reference
     list_flush(&local_candidate->stun_sessions);
     mem_deref(local_candidate->udp_helper);
@@ -26,6 +39,7 @@ enum rawrtc_code rawrtc_candidate_helper_create(
         udp_helper_recv_h* const receive_handler,
         void* const arg
 ) {
+
     struct rawrtc_candidate_helper* candidate_helper;
     enum rawrtc_code error;
 
@@ -39,6 +53,8 @@ enum rawrtc_code rawrtc_candidate_helper_create(
     if (!candidate_helper) {
         return RAWRTC_CODE_NO_MEMORY;
     }
+    
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_create, local_candidate:%p\n", candidate_helper);
 
     // Set fields
     candidate_helper->gatherer = mem_ref(gatherer);
@@ -78,6 +94,12 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
         return RAWRTC_CODE_INVALID_ARGUMENT;
     }
 
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_set_receive_handler candidate_helper: %p receive_handler: %p arg: %p prev udp_helper: %p\n",
+            candidate_helper,
+            receive_handler,
+            arg,
+            candidate_helper->udp_helper);
+
     // Get local candidate's UDP socket
     struct udp_sock* const udp_socket = trice_lcand_sock(
             candidate_helper->gatherer->ice, candidate_helper->candidate);
@@ -93,11 +115,37 @@ enum rawrtc_code rawrtc_candidate_helper_set_receive_handler(
         return error;
     }
 
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_set_receive_handler new udp_helper: %p\n", udp_helper);
+    
     // Unset current helper (if any) and set new helper
+    if (candidate_helper->udp_helper) {
+        DEBUG_INFO("--->[candidate_helper.c]: Unsetting prev udp_helper: %p\n", candidate_helper->udp_helper);
+        udp_helper_handler_set (candidate_helper->udp_helper, NULL, NULL);
+    }
     mem_deref(candidate_helper->udp_helper);
     candidate_helper->udp_helper = udp_helper;
 
     // TODO: What about TCP helpers?
+
+    // Done
+    return RAWRTC_CODE_SUCCESS;
+}
+
+/*
+ * Set a candidate helper's receive handler.
+ */
+enum rawrtc_code rawrtc_candidate_helper_unset_receive_handler(
+        struct rawrtc_candidate_helper* const candidate_helper
+) {
+
+    DEBUG_INFO("--->[candidate_helper.c]: rawrtc_candidate_helper_unset_receive_handler: candidate_helper: %p, udp_helper: %p\n", candidate_helper, candidate_helper->udp_helper);
+
+    // Check arguments
+    if (!candidate_helper || !candidate_helper->udp_helper) {
+        return RAWRTC_CODE_INVALID_ARGUMENT;
+    }
+
+    udp_helper_handler_set (candidate_helper->udp_helper, NULL, NULL);
 
     // Done
     return RAWRTC_CODE_SUCCESS;

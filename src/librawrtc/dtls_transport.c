@@ -550,6 +550,9 @@ static bool udp_receive_helper(
 static void rawrtc_dtls_transport_destroy(
         void* arg
 ) {
+  
+    DEBUG_INFO("--->[dtls_transport.c]: rawrtc_dtls_transport_destroy\n");
+  
     struct rawrtc_dtls_transport* const transport = arg;
     struct le* le;
 
@@ -561,6 +564,7 @@ static void rawrtc_dtls_transport_destroy(
     for (le = list_head(&transport->ice_transport->gatherer->local_candidates);
          le != NULL; le = le->next) {
         struct rawrtc_candidate_helper* const candidate_helper = le->data;
+
         mem_deref(candidate_helper->udp_helper);
         // TODO: Be aware that UDP packets go to nowhere now...
     }
@@ -588,6 +592,9 @@ enum rawrtc_code rawrtc_dtls_transport_create_internal(
         rawrtc_dtls_transport_error_handler* const error_handler, // nullable
         void* const arg // nullable
 ) {
+  
+    DEBUG_INFO("--->[dtls_transport.c]: rawrtc_dtls_transport_create_internal\n");
+  
     struct rawrtc_dtls_transport* transport;
     enum rawrtc_code error;
     struct le* le;

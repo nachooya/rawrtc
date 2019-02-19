@@ -515,6 +515,7 @@ static void set_state(
             if (fclose(transport->trace_handle)) {
                 DEBUG_WARNING("Could not close trace file, reason: %m\n", errno);
             }
+            transport->trace_handle = NULL;
         }
     }
 
@@ -1421,7 +1422,7 @@ static void handle_application_message(
         error = RAWRTC_CODE_INVALID_MESSAGE;
         goto out;
     }
-    context = channel->transport_arg;
+    context = mem_ref(channel->transport_arg);
 
     // Messages may now be sent unordered
     // TODO: Should we update this flag before or after the message has been received completely
@@ -1521,6 +1522,7 @@ out:
     // Un-reference
     if (context) {
         context->buffer_inbound = mem_deref(context->buffer_inbound);
+        context = mem_deref(context);
     }
 }
 
@@ -1912,6 +1914,9 @@ enum rawrtc_code data_channels_alloc(
 static void rawrtc_sctp_transport_destroy(
         void* arg
 ) {
+  
+    DEBUG_INFO("--->[sctp_transport.c]: rawrtc_sctp_transport_destroy\n");
+  
     struct rawrtc_sctp_transport* const transport = arg;
 
     // Stop transport
@@ -2066,6 +2071,7 @@ enum rawrtc_code rawrtc_sctp_transport_create(
 
     // Create packet tracer
     // TODO: Debug mode only, filename set by debug options
+    transport->trace_handle = NULL
 #ifdef SCTP_DEBUG
     {
         char trace_handle_id[8];
