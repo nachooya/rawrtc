@@ -43,7 +43,7 @@ static enum rawrtc_code generate_key_rsa(
         EVP_PKEY** const keyp, // de-referenced
         uint_fast32_t const modulus_length
 ) {
-    enum rawrtc_code error = RAWRTC_CODE_UNKNOWN_ERROR;
+    enum rawrtc_code error = RAWRTC_CODE_CERTIFICATE_ERROR;
     EVP_PKEY* key = NULL;
     RSA* rsa = NULL;
     BIGNUM* bn = NULL;
@@ -125,7 +125,7 @@ static enum rawrtc_code generate_key_ecc(
         EVP_PKEY** const keyp, // de-referenced
         char* const named_curve
 ) {
-    enum rawrtc_code error = RAWRTC_CODE_UNKNOWN_ERROR;
+    enum rawrtc_code error = RAWRTC_CODE_CERTIFICATE_ERROR;
     EVP_PKEY* key = NULL;
     int curve_group_nid;
     EC_KEY* ecc = NULL;
@@ -200,7 +200,7 @@ static enum rawrtc_code generate_self_signed_certificate(
         uint_fast32_t const valid_until,
         enum rawrtc_certificate_sign_algorithm const sign_algorithm
 ) {
-    enum rawrtc_code error = RAWRTC_CODE_UNKNOWN_ERROR;
+    enum rawrtc_code error = RAWRTC_CODE_CERTIFICATE_ERROR;
     X509* certificate = NULL;
     X509_NAME* name = NULL;
     EVP_MD const* sign_function;
@@ -528,7 +528,7 @@ enum rawrtc_code rawrtc_certificate_copy(
         struct rawrtc_certificate** const certificatep, // de-referenced
         struct rawrtc_certificate* const source_certificate
 ) {
-    enum rawrtc_code error = RAWRTC_CODE_UNKNOWN_ERROR;
+    enum rawrtc_code error = RAWRTC_CODE_CERTIFICATE_ERROR;
     struct rawrtc_certificate *certificate;
 
     // Check arguments
@@ -634,7 +634,7 @@ enum rawrtc_code rawrtc_certificate_get_pem(
     if (error) {
         return error;
     }
-    error = RAWRTC_CODE_UNKNOWN_ERROR;
+    error = RAWRTC_CODE_CERTIFICATE_ERROR;
 
     // Create bio structure
 #if (OPENSSL_VERSION_NUMBER < 0x1010000fL) || defined(OPENSSL_IS_BORINGSSL)
@@ -657,7 +657,7 @@ enum rawrtc_code rawrtc_certificate_get_pem(
     length = BIO_number_written(bio);
 #if (UINT64_MAX > INT_MAX)
     if (length > INT_MAX) {
-        error = RAWRTC_CODE_UNKNOWN_ERROR;
+        error = RAWRTC_CODE_CERTIFICATE_ERROR;
         goto out;
     }
 #endif
@@ -719,19 +719,19 @@ enum rawrtc_code rawrtc_certificate_get_der(
     if (error) {
         return error;
     }
-    error = RAWRTC_CODE_UNKNOWN_ERROR;
+    error = RAWRTC_CODE_CERTIFICATE_ERROR;
 
     // Allocate buffer
     if (encode_certificate) {
         length_certificate = i2d_X509(certificate->certificate, NULL);
         if (length_certificate < 1) {
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_CERTIFICATE_ERROR;
         }
     }
     if (encode_key) {
         length_key = i2d_PrivateKey(certificate->key, NULL);
         if (length_key < 1) {
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_CERTIFICATE_ERROR;
         }
     }
     length = (size_t) (length_certificate + length_key);
@@ -797,7 +797,7 @@ enum rawrtc_code rawrtc_certificate_get_fingerprint(
         return RAWRTC_CODE_NO_VALUE;
     }
     if (length < 1) {
-        return RAWRTC_CODE_UNKNOWN_ERROR;
+        return RAWRTC_CODE_CERTIFICATE_ERROR;
     }
 
     // Convert bytes to hex

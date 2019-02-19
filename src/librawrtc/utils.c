@@ -100,6 +100,18 @@ char const* rawrtc_code_to_str(
             return "stop iteration";
         case RAWRTC_CODE_NOT_PERMITTED:
             return "not permitted";
+        case RAWRTC_CODE_CERTIFICATE_ERROR:
+            return "certificate error";
+        case RAWRTC_CODE_SCTP_TRANSPORT_ERROR:
+            return "sctp transport error";
+        case RAWRTC_CODE_DF_ERROR:
+            return "diffie hellman parameters error";
+        case RAWRTC_CODE_UNKNOWN_RE_ERROR:
+            return "unknown re error";
+        case RAWRTC_CODE_PEER_CONNECTION_ERROR:
+            return "peer connection error";
+        case RAWRTC_CODE_PEER_CONNECTION_DESC_ERROR:
+            return "peer connection description error";
         default:
             return "(no error translation)";
     }
@@ -133,7 +145,7 @@ enum rawrtc_code rawrtc_error_to_code(
         case EPERM:
             return RAWRTC_CODE_NOT_PERMITTED;
         default:
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_UNKNOWN_RE_ERROR;
     }
 }
 

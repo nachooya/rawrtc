@@ -611,7 +611,7 @@ out:
 
         // Sanity check
         if (!channel_registered(transport, channel)) {
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_SCTP_TRANSPORT_ERROR;
         }
 
         // Remove from transport
@@ -2487,7 +2487,7 @@ static enum rawrtc_code channel_close_handler(
 
         // Sanity check
         if (!channel_registered(transport, channel)) {
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_SCTP_TRANSPORT_ERROR;
         }
 
         // Reset outgoing streams

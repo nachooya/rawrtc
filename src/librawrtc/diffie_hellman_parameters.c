@@ -73,7 +73,7 @@ static enum rawrtc_code set_dh_parameters(
     // Apply Diffie-Hellman parameters
     if (!SSL_CTX_set_tmp_dh(ssl_context, dh)) {
         DEBUG_WARNING("set_dh_parameters: set_tmp_dh failed\n");
-        return RAWRTC_CODE_UNKNOWN_ERROR;
+        return RAWRTC_CODE_DF_ERROR;
     }
 
     // Done
@@ -90,7 +90,7 @@ enum rawrtc_code rawrtc_set_dh_parameters_der(
 ) {
     struct ssl_ctx_st* const ssl_context = tls_openssl_context(tls);
     DH* dh = NULL;
-    enum rawrtc_code error = RAWRTC_CODE_UNKNOWN_ERROR;
+    enum rawrtc_code error = RAWRTC_CODE_DF_ERROR;
 
     // Check arguments
     if (!ssl_context || !der || der_size == 0 || der_size > LONG_MAX) {
@@ -189,7 +189,7 @@ enum rawrtc_code rawrtc_enable_ecdh(
     // Enable elliptic-curve Diffie-Hellman
     if (!SSL_CTX_set_ecdh_auto(ssl_context, (long) 1)) {
         DEBUG_WARNING("set_dh_params: set_ecdh_auto failed\n");
-        return RAWRTC_CODE_UNKNOWN_ERROR;
+        return RAWRTC_CODE_DF_ERROR;
     }
 
     // Done

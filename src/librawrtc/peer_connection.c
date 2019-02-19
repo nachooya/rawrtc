@@ -176,7 +176,7 @@ static enum rawrtc_code peer_connection_start(
         default:
             DEBUG_WARNING("Cannot determine ICE role from SDP type %s, report this!\n",
                           rawrtc_sdp_type_to_str(description->type));
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_PEER_CONNECTION_ERROR;
     }
 
     // Start ICE transport
@@ -207,7 +207,7 @@ static enum rawrtc_code peer_connection_start(
         }
         default:
             DEBUG_WARNING("Invalid data transport type\n");
-            return RAWRTC_CODE_UNKNOWN_ERROR;
+            return RAWRTC_CODE_PEER_CONNECTION_ERROR;
     }
 
     // Add remote ICE candidates
@@ -976,7 +976,7 @@ enum rawrtc_code rawrtc_peer_connection_set_local_description(
                 break;
             default:
                 DEBUG_WARNING("Unknown SDP type, please report this!\n");
-                return RAWRTC_CODE_UNKNOWN_ERROR;
+                return RAWRTC_CODE_PEER_CONNECTION_ERROR;
         }
     } else {
         switch (description->type) {
@@ -989,7 +989,7 @@ enum rawrtc_code rawrtc_peer_connection_set_local_description(
                 return RAWRTC_CODE_INVALID_STATE;
             default:
                 DEBUG_WARNING("Unknown SDP type, please report this!\n");
-                return RAWRTC_CODE_UNKNOWN_ERROR;
+                return RAWRTC_CODE_PEER_CONNECTION_ERROR;
         }
     }
 
@@ -1128,7 +1128,7 @@ enum rawrtc_code rawrtc_peer_connection_set_remote_description(
                 break;
             default:
                 DEBUG_WARNING("Unknown SDP type, please report this!\n");
-                return RAWRTC_CODE_UNKNOWN_ERROR;
+                return RAWRTC_CODE_PEER_CONNECTION_ERROR;
         }
     } else {
         switch (description->type) {
@@ -1141,7 +1141,7 @@ enum rawrtc_code rawrtc_peer_connection_set_remote_description(
                 return RAWRTC_CODE_INVALID_STATE;
             default:
                 DEBUG_WARNING("Unknown SDP type, please report this!\n");
-                return RAWRTC_CODE_UNKNOWN_ERROR;
+                return RAWRTC_CODE_PEER_CONNECTION_ERROR;
         }
     }
 
