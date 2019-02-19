@@ -724,7 +724,7 @@ enum rawrtc_code rawrtc_peer_connection_description_create_internal(
             }
             break;
         default:
-            error = RAWRTC_CODE_UNKNOWN_ERROR;
+            error = RAWRTC_CODE_PEER_CONNECTION_DESC_ERROR;
             goto out;
             break;
     }
