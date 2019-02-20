@@ -576,7 +576,8 @@ typedef enum rawrtc_code (rawrtc_data_transport_channel_send_handler)(
     bool const is_binary
 );
 
-
+#define RAWRTC_MAX_DNS_SERVERS 10
+void rawrtc_set_dns_server (const char* server);
 
 /*
  * Configuration.
@@ -593,6 +594,9 @@ struct rawrtc_config {
     enum rawrtc_ice_server_transport ice_server_secure_transport;
     uint32_t stun_keepalive_interval;
     struct stun_conf stun_config;
+
+    struct sa dns_servers[RAWRTC_MAX_DNS_SERVERS];
+    uint32_t n_dns_servers;
 };
 
 /*

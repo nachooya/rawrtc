@@ -31,8 +31,15 @@ struct rawrtc_config rawrtc_default_config = {
         STUN_DEFAULT_RM,
         STUN_DEFAULT_TI,
         0x00
-    }
+    },
+    .dns_servers = {{{{0}}}},
+    .n_dns_servers = 0
 };
+
+void rawrtc_set_dns_server (const char* server) {
+    int err = sa_set_str (&rawrtc_default_config.dns_servers[0], server, DNS_PORT);
+    rawrtc_default_config.n_dns_servers = 1;
+}
 
 /*
  * Default certificate options.
