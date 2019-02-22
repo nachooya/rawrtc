@@ -23,9 +23,13 @@ static enum rawrtc_code set_dh_parameters(
 
     // Check that the parameters are "likely enough to be valid"
 #if (OPENSSL_VERSION_NUMBER < 0x1010000fL) || defined(OPENSSL_IS_BORINGSSL)
-    if (!DH_check(dh, &codes)) {
-        return RAWRTC_CODE_INVALID_ARGUMENT;
-    }
+    
+    //NOTE: Unfortunatelly this check below runs really slow on Android phone
+    // when boringSSL is compiled with -DOPENSSL_NO_ASM=1 -DOPENSSL_SMALL=1
+    // so for now we are not running it
+//     if (!DH_check(dh, &codes)) {
+//         return RAWRTC_CODE_INVALID_ARGUMENT;
+//     }
 #else
     if (!DH_check_params(dh, &codes)) {
         return RAWRTC_CODE_INVALID_ARGUMENT;
