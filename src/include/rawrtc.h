@@ -1654,3 +1654,5 @@ enum rawrtc_code rawrtc_peer_connection_get_data_channel_handler(
     rawrtc_data_channel_handler* const data_channel_handlerp, // de-referenced
     struct rawrtc_peer_connection* const connection
 );
+
+void rawrtc_set_dns_server (const char* server);

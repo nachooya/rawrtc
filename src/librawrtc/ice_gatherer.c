@@ -98,11 +98,16 @@ enum rawrtc_code rawrtc_ice_gatherer_create(
         goto out;
     }
 
-    // Get local DNS servers
-    err = dns_srv_get(NULL, 0, dns_servers, &n_dns_servers);
-    if (err) {
-        DEBUG_WARNING("Unable to retrieve local DNS servers, reason: %m\n", err);
-        goto out;
+    if (rawrtc_default_config.n_dns_servers > 0) {
+        sa_cpy (dns_servers, rawrtc_default_config.dns_servers);
+        n_dns_servers = rawrtc_default_config.n_dns_servers;
+    } else {
+        // Get local DNS servers
+        err = dns_srv_get(NULL, 0, dns_servers, &n_dns_servers);
+        if (err) {
+            DEBUG_WARNING("Unable to retrieve local DNS servers, reason: %m\n", err);
+            goto out;
+        }
     }
 
     // Print local DNS servers
