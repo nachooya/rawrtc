@@ -25,6 +25,9 @@ static enum rawrtc_code set_dh_parameters(
 ) {
     int codes;
 
+#ifndef RAWRTC_DISABLE_DH_CHECK //NOTE: Unfortunatelly this check below runs really slow on Android phone
+                                // when boringSSL is compiled with -DOPENSSL_NO_ASM=1 -DOPENSSL_SMALL=1
+                                // so for now we are not running it
     // Check that the parameters are "likely enough to be valid"
 #if OPENSSL_VERSION_NUMBER < 0x1010000fL || defined(OPENSSL_IS_BORINGSSL)
     if (!DH_check(dh, &codes)) {
@@ -73,6 +76,7 @@ static enum rawrtc_code set_dh_parameters(
 #endif
         return RAWRTC_CODE_INVALID_ARGUMENT;
     }
+#endif // RAWRTC_DISABLE_DH_CHECK
 
     // Apply Diffie-Hellman parameters
     if (!SSL_CTX_set_tmp_dh(ssl_context, dh)) {
