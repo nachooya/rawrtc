@@ -787,6 +787,12 @@ static bool interface_handler(
         return false; // Continue gathering
     }
 
+    // getifaddrs implementation for Android from libuv library
+    // does not properly initialize the IPv6 address port to 0
+    if (af == AF_INET6) {
+        sa_set_port (address, 0);
+    }
+
     // TODO: Ignore interfaces gatherered twice
 
     DEBUG_PRINTF("Gathered local interface %j\n", address);
