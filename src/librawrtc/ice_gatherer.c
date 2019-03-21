@@ -788,10 +788,8 @@ static bool interface_handler(
     }
 
     // getifaddrs implementation for Android from libuv library
-    // does not properly initialize the IPv6 address port to 0
-    if (af == AF_INET6) {
-        sa_set_port (address, 0);
-    }
+    // does not properly initialize address port to 0
+    sa_set_port (address, 0);
 
     // TODO: Ignore interfaces gatherered twice
 
