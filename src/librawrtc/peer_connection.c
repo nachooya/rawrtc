@@ -11,7 +11,7 @@
 #include "peer_connection.h"
 
 #define DEBUG_MODULE "peer-connection"
-#define RAWRTC_DEBUG_MODULE_LEVEL 7 // Note: Uncomment this to debug this module only
+//#define RAWRTC_DEBUG_MODULE_LEVEL 7 // Note: Uncomment this to debug this module only
 #include <rawrtcc/debug.h>
 
 // Constants
